@@ -2,17 +2,20 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const packageName = require('./package.json').name;
+
 module.exports = {
   entry: {
-    path: ['./index.js']
+    path: ['./index.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'react15.js',
-    library: 'react15',
+    library: `${packageName}-[name]`,
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    publicPath: 'http://localhost:9002/'
+    publicPath: 'http://localhost:9002/',
+    jsonpFunction: `webpackJsonp_${packageName}`,
   },
   module: {
     rules: [
@@ -21,41 +24,41 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.(c|sc)ss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: {
           loader: 'url-loader',
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   optimization: {
     splitChunks: false,
-    minimize: false
+    minimize: false,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
     }),
 
     new MiniCssExtractPlugin({
-      filename: '[name].css'
-    })
+      filename: '[name].css',
+    }),
   ],
   devServer: {
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: {'Access-Control-Allow-Origin': '*'},
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9002,
     historyApiFallback: true,
     hot: true,
-  }
-}
+  },
+};

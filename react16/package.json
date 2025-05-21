@@ -10,7 +10,8 @@
     "node-sass": "^9.0.0",
     "react": "^17.0.0-rc.0",
     "react-dom": "^17.0.0-rc.0",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "single-spa-react": "^6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
